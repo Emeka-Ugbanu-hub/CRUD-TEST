@@ -1,25 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useContext } from "react";
+
+import "./App.css";
+import Orders from "./pages/Orders";
+import ModalContext from "./context/modalContext";
 
 function App() {
+  const [myAdd, setMyAdd] = useState(false);
+  const [myEdit, setMyEdit] = useState(false);
+  const Add = () => {
+    setMyAdd(!myAdd);
+  };
+ 
+  const Edit = () => {
+    setMyEdit(!myEdit);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ModalContext.Provider value={{ addModal: myAdd, setAdd: Add, editModal: myEdit, setEdit: Edit,}}>
+      <Orders />
+    </ModalContext.Provider>
   );
 }
 

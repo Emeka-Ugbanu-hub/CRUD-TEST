@@ -1,0 +1,26 @@
+.input-div{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-top: 1rem;
+    font-size: 14px;
+}
+.input {
+   
+    outline: none;
+    border: none;
+    height: 30px;
+    border-radius: 4px;
+}
+
+.save {
+    margin-top: 1rem;
+    width: 90%;
+    height: 40px;
+    border: none;
+    background: red;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+}
