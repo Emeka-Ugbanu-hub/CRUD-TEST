@@ -14,6 +14,9 @@ import { calculateRange, sliceData } from "../../utils/table-pagination";
 import modalContext from "../../context/modalContext";
 import Papa from "papaparse";
 import { generateCSV } from "../../utils/csvFileToArray";
+import { isValidDate } from "../../utils/checkDate";
+import { isNumeric } from "../../utils/checkNum";
+import ErrorNotif from "../../components/ErroNotif";
 
 const Orders = () => {
   const [search, setSearch] = useState("");
@@ -24,6 +27,7 @@ const Orders = () => {
     data: {},
     index: null,
   });
+  const [error, setError] = useState(false);
   useEffect(() => {
     setPagination(calculateRange(all_orders, 5));
     setOrders(sliceData(all_orders, page, 5));
@@ -69,24 +73,40 @@ const Orders = () => {
           valuesArray.push(Object.values(d));
         });
 
+        const testBoolean = results.data.some((m: any) => {
+          if (
+            isValidDate(m.date.toString()) &&
+            ["Paid", "Canceled", "Refunded"].includes(m.status.trim()) &&
+            isNumeric(m.salary)
+          ) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+
         if (
+          results.data.length !== 0 &&
           rowsArray[0].toString() ===
-          [
-            "name",
-            "description",
-            "id",
-            "date",
-            "title",
-            "status",
-            "salary",
-          ].toString()
+            [
+              "name",
+              "description",
+              "id",
+              "date",
+              "title",
+              "status",
+              "salary",
+            ].toString() &&
+          rowsArray[0].length === 7 &&
+          testBoolean === true
         ) {
           // Filtered Values
           setOrders(results.data);
         } else {
-          alert(
-            "header is not aligned, make sure the headers are in this order [name,description,id,date,title,status,salary]"
-          );
+          setError(true);
+          setTimeout(() => {
+            setError(false);
+          }, 3000);
         }
       },
     });
@@ -126,6 +146,7 @@ const Orders = () => {
 
   return (
     <div className="dashboard-content">
+      {error && <ErrorNotif />}
       <div className="dashboard-content-container">
         <div className="dashboard-content-header">
           <h2>Orders List</h2>
@@ -196,13 +217,13 @@ const Orders = () => {
         <table>
           <thead>
             <tr>
-            <th>ID</th>
-            <th>DATE</th>
-            <th>STATUS</th>
-            <th>TITLE</th>
-            <th>DESCRIPTION</th>
-            <th>SALARY</th>
-            <th>ACTIONS</th>
+              <th>ID</th>
+              <th>DATE</th>
+              <th>STATUS</th>
+              <th>TITLE</th>
+              <th>DESCRIPTION</th>
+              <th>SALARY</th>
+              <th>ACTIONS</th>
             </tr>
           </thead>
 
