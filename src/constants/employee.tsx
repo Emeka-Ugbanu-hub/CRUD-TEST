@@ -1,4 +1,4 @@
-const all_orders = [
+const all_employee = [
   {
     date: "2022-11-15",
     name: "Michael Thompson",
@@ -25,4 +25,4 @@ const all_orders = [
   },
 ];
 
-export default all_orders;
+export default all_employee;

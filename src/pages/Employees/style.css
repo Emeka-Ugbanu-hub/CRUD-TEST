@@ -157,10 +157,38 @@ td span {
   color: #ffffff;
   font-size: 0.9rem;
   font-weight: 700;
+  position: relative;
   border-radius: 8px;
   text-transform: uppercase;
   border: 1px solid #015c92;
   background-color: #015c92;
   display: flex;
   margin-left: 1rem;
+}
+.import:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+  padding: 10px;
+  background-color: #000;
+  border-radius: 10px;
+}
+.tooltip {
+  font-weight: 600;
+  position: absolute;
+  left: 10rem;
+  top: 0.5rem;
+  white-space: nowrap;
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.3s;
+  z-index: 99;
+}
+.tooltip::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  transition: 0.4s;
+  border-top: 10px solid transparent;
+  border-right: 20px solid #000;
+  border-bottom: 10px solid transparent;
 }

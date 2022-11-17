@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 
 import "./App.css";
-import Orders from "./pages/Orders";
+import Employees from "./pages/Employees";
 import ModalContext from "./context/modalContext";
 
 function App() {
@@ -10,13 +10,15 @@ function App() {
   const Add = () => {
     setMyAdd(!myAdd);
   };
- 
+
   const Edit = () => {
     setMyEdit(!myEdit);
   };
   return (
-    <ModalContext.Provider value={{ addModal: myAdd, setAdd: Add, editModal: myEdit, setEdit: Edit,}}>
-      <Orders />
+    <ModalContext.Provider
+      value={{ addModal: myAdd, setAdd: Add, editModal: myEdit, setEdit: Edit }}
+    >
+      <Employees />
     </ModalContext.Provider>
   );
 }
