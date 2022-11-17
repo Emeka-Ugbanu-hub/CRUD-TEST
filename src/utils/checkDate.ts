@@ -1,4 +1,18 @@
-function isValidDate(dateString: string) {
+
+/**
+* isValidDate.ts*
+
+* Copyright © 2022 - All Rights Reserved. *
+
+* Unauthorized copying of this file, via any medium is strictly prohibited.
+* This file and all it's contents are proprietary and confidential. *
+
+* Maintained by Emeka Ugbanu, 2022
+* @file isValidDate.ts
+* @author Emeka Ugbanu
+* @section License
+*/
+export const isValidDate = (dateString: string) =>{
   // First check for the pattern
   var regex_date = /^\d{4}\-\d{1,2}\-\d{1,2}$/;
 
@@ -28,4 +42,4 @@ function isValidDate(dateString: string) {
   return day > 0 && day <= monthLength[month - 1];
 }
 
-export { isValidDate };
+

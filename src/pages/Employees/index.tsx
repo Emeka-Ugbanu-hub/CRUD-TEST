@@ -1,3 +1,18 @@
+
+/**
+* Employees.tsx*
+
+* Copyright © 2022 - All Rights Reserved. *
+
+* Unauthorized copying of this file, via any medium is strictly prohibited.
+* This file and all it's contents are proprietary and confidential. *
+
+* Maintained by Emeka Ugbanu, 2022
+* @file Employees.tsx
+* @author Emeka Ugbanu
+* @section License
+*/
+
 import React, { useState, useEffect, useContext } from "react";
 import DoneIcon from "../../assets/icons/done.svg";
 import CancelIcon from "../../assets/icons/cancel.svg";
@@ -9,7 +24,7 @@ import ImportIcon from "../../assets/icons/import.svg";
 import ExportIcon from "../../assets/icons/export.svg";
 import { AddModal, EditModal } from "../../components/Modal";
 import "./style.css";
-import all_employee from "../../constants/employee";
+import { all_employee } from "../../constants/employee";
 import { calculateRange, sliceData } from "../../utils/table-pagination";
 import modalContext from "../../context/modalContext";
 import Papa from "papaparse";
@@ -41,7 +56,7 @@ const Employees = () => {
     setPagination(calculateRange(all_employee, 5));
     setOrders(sliceData(all_employee, page, 5));
   }, []);
-//handle Delete function
+  //handle Delete function
   const handleDelete = (id: String) => {
     const removeItem = orders.filter((user) => user.name !== id);
     setOrders(removeItem);
@@ -53,7 +68,7 @@ const Employees = () => {
     setOrders((prev) => [...prev, data]);
     showModal.setAdd();
   };
- //handle Search function
+  //handle Search function
   const __handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
     if (event.target.value !== "") {
@@ -83,7 +98,7 @@ const Employees = () => {
             rowsArray.push(Object.keys(d));
             valuesArray.push(Object.values(d));
           });
-//validate import csv file
+          //validate import csv file
           const testBoolean = results.data.some((m: any) => {
             if (
               isValidDate(m.date.toString()) &&
@@ -123,7 +138,7 @@ const Employees = () => {
       });
     }
   };
-//handle Export function
+  //handle Export function
   const handleExport = (orders: Object) => {
     const csvHeader = [
       { label: "name", key: "name" },
@@ -146,7 +161,7 @@ const Employees = () => {
     }));
     showModal.setEdit();
   };
-//Edit Function Filter
+  //Edit Function Filter
   const handleEditChange = (edit: Employ, index: number) => {
     orders[index] = edit;
     showModal.setEdit();

@@ -1,3 +1,17 @@
+/**
+* AddModal.tsx*
+
+* Copyright © 2022 - All Rights Reserved. *
+
+* Unauthorized copying of this file, via any medium is strictly prohibited.
+* This file and all it's contents are proprietary and confidential. *
+
+* Maintained by Emeka Ugbanu, 2022
+* @file AddModal.tsx
+* @author Emeka Ugbanu
+* @section License
+*/
+
 import React, { useState, useContext } from "react";
 import closeIcon from "../../assets/icons/close.svg";
 import modalContext from "../../context/modalContext";

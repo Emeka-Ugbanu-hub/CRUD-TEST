@@ -1,8 +1,34 @@
+/**
+* EditModal.tsx*
+
+* Copyright © 2022 - All Rights Reserved. *
+
+* Unauthorized copying of this file, via any medium is strictly prohibited.
+* This file and all it's contents are proprietary and confidential. *
+
+* Maintained by Emeka Ugbanu, 2022
+* @file EditModal.tsx
+* @author Emeka Ugbanu
+* @section License
+*/
+
 import React, { useState, useContext } from "react";
 import closeIcon from "../../assets/icons/close.svg";
 import modalContext from "../../context/modalContext";
 import "./styles.css";
-const EditModal = ({ data, EditChange }: any) => {
+
+/**
+ * @interface IReportsTableProperties
+ */
+ interface IEditModalProperties {
+  data: {
+    index:Number,
+    data:any ;
+  };
+  EditChange: (edit: any, data: any) => void /**< function Used to edit modal */;
+}
+
+const EditModal = ({ data, EditChange }: IEditModalProperties) => {
   const showModal = useContext(modalContext);
   const [edit, setEdit] = useState<any>({
     name: data.data.name,
