@@ -41,16 +41,7 @@ const AddModal = ({ handleSubmit }: any) => {
           e.preventDefault();
           handleSubmit(data);
         }}
-        style={{
-          position: "absolute",
-          overflow: "scroll",
-          zIndex: 99,
-          width: `${40}%`,
-          height: `${70}vh`,
-          padding: `${2}rem`,
-          left: `${30}%`,
-          background: "#015C92",
-        }}
+       className="form"
       >
         <img
           src={closeIcon}
