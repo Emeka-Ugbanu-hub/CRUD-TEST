@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import closeIcon from "../../assets/icons/close.svg";
-import all_orders from "../../constants/orders";
 import modalContext from "../../context/modalContext";
 import "./styles.css";
 const AddModal = ({ handleSubmit }: any) => {
@@ -14,7 +13,7 @@ const AddModal = ({ handleSubmit }: any) => {
     status: "Paid",
   });
 
-  const updateData = (e: any) => {
+  const updateData = (e: React.ChangeEvent<HTMLInputElement> | any) => {
     setData({
       ...data,
       [e.target.name]: e.target.value,

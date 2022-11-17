@@ -9,7 +9,7 @@ import ImportIcon from "../../assets/icons/import.svg";
 import ExportIcon from "../../assets/icons/export.svg";
 import { AddModal, EditModal } from "../../components/Modal";
 import "./style.css";
-import all_orders from "../../constants/orders";
+import all_employee from "../../constants/employee";
 import { calculateRange, sliceData } from "../../utils/table-pagination";
 import modalContext from "../../context/modalContext";
 import Papa from "papaparse";
@@ -18,22 +18,31 @@ import { isValidDate } from "../../utils/checkDate";
 import { isNumeric } from "../../utils/checkNum";
 import ErrorNotif from "../../components/ErroNotif";
 
-const Orders = () => {
+interface Employ {
+  date: String;
+  name: String;
+  description: String;
+  salary: String;
+  status: String;
+  title: String;
+}
+
+const Employees = () => {
   const [search, setSearch] = useState("");
-  const [orders, setOrders] = useState(all_orders);
-  const [page, setPage] = useState(1);
+  const [orders, setOrders] = useState<Employ[]>(all_employee);
+  const [page, setPage] = useState<Number>(1);
   const [pagination, setPagination] = useState<any>([]);
-  const [editData, setEditData] = useState({
+  const [editData, setEditData] = useState<{ data: Object; index: Number }>({
     data: {},
-    index: null,
+    index: 0,
   });
   const [error, setError] = useState(false);
   useEffect(() => {
-    setPagination(calculateRange(all_orders, 5));
-    setOrders(sliceData(all_orders, page, 5));
+    setPagination(calculateRange(all_employee, 5));
+    setOrders(sliceData(all_employee, page, 5));
   }, []);
-
-  const handleDelete = (id: any) => {
+//handle Delete function
+  const handleDelete = (id: String) => {
     const removeItem = orders.filter((user) => user.name !== id);
     setOrders(removeItem);
   };
@@ -44,8 +53,8 @@ const Orders = () => {
     setOrders((prev) => [...prev, data]);
     showModal.setAdd();
   };
-  // Search
-  const __handleSearch = (event: any) => {
+ //handle Search function
+  const __handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
     if (event.target.value !== "") {
       let search_results = orders.filter(
@@ -59,60 +68,63 @@ const Orders = () => {
       __handleChangePage(1);
     }
   };
-  const handleImport = (e: any) => {
-    Papa.parse(e.target.files[0], {
-      header: true,
-      skipEmptyLines: true,
+  //handle Import function
+  const handleImport = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files !== null) {
+      Papa.parse(e.target.files[0], {
+        header: true,
+        skipEmptyLines: true,
 
-      complete: function (results: any) {
-        const rowsArray = [] as any;
-        const valuesArray = [] as any;
+        complete: function (results: any) {
+          const rowsArray: any = [];
+          const valuesArray: any = [];
 
-        results.data.map((d: any) => {
-          rowsArray.push(Object.keys(d));
-          valuesArray.push(Object.values(d));
-        });
+          results.data.map((d: any) => {
+            rowsArray.push(Object.keys(d));
+            valuesArray.push(Object.values(d));
+          });
+//validate import csv file
+          const testBoolean = results.data.some((m: any) => {
+            if (
+              isValidDate(m.date.toString()) &&
+              ["Paid", "Canceled", "Refunded"].includes(m.status.trim()) &&
+              isNumeric(m.salary)
+            ) {
+              return true;
+            } else {
+              return false;
+            }
+          });
 
-        const testBoolean = results.data.some((m: any) => {
           if (
-            isValidDate(m.date.toString()) &&
-            ["Paid", "Canceled", "Refunded"].includes(m.status.trim()) &&
-            isNumeric(m.salary)
+            results.data.length !== 0 &&
+            rowsArray[0].toString() ===
+              [
+                "name",
+                "description",
+                "id",
+                "date",
+                "title",
+                "status",
+                "salary",
+              ].toString() &&
+            rowsArray[0].length === 7 &&
+            testBoolean === true
           ) {
-            return true;
+            // Filtered Values
+            setOrders(results.data);
           } else {
-            return false;
+            setError(true);
+            setTimeout(() => {
+              setError(false);
+            }, 3000);
           }
-        });
-
-        if (
-          results.data.length !== 0 &&
-          rowsArray[0].toString() ===
-            [
-              "name",
-              "description",
-              "id",
-              "date",
-              "title",
-              "status",
-              "salary",
-            ].toString() &&
-          rowsArray[0].length === 7 &&
-          testBoolean === true
-        ) {
-          // Filtered Values
-          setOrders(results.data);
-        } else {
-          setError(true);
-          setTimeout(() => {
-            setError(false);
-          }, 3000);
-        }
-      },
-    });
+        },
+      });
+    }
   };
-
-  const handleExport = (orders: any) => {
+//handle Export function
+  const handleExport = (orders: Object) => {
     const csvHeader = [
       { label: "name", key: "name" },
       { label: "description", key: "description" },
@@ -125,7 +137,8 @@ const Orders = () => {
 
     generateCSV(csvHeader, orders, "yourfile");
   };
-  const handleEdit = (order: any, index: any) => {
+  //handle Edit function
+  const handleEdit = (order: Object, index: Number) => {
     setEditData((editData) => ({
       ...editData,
       data: order,
@@ -133,14 +146,15 @@ const Orders = () => {
     }));
     showModal.setEdit();
   };
-  const handleEditChange = (edit: any, index: any) => {
+//Edit Function Filter
+  const handleEditChange = (edit: Employ, index: number) => {
     orders[index] = edit;
     showModal.setEdit();
   };
   // Change Page
-  const __handleChangePage = (new_page: any) => {
+  const __handleChangePage = (new_page: Number) => {
     setPage(new_page);
-    setOrders(sliceData(all_orders, new_page, 5));
+    setOrders(sliceData(all_employee, new_page, 5));
   };
   const showModal = useContext(modalContext);
 
@@ -169,7 +183,7 @@ const Orders = () => {
             {showModal.editModal && (
               <EditModal EditChange={handleEditChange} data={editData} />
             )}
-            <label htmlFor="import" className="header-button">
+            <label htmlFor="import" className="header-button import">
               <input
                 id="import"
                 type={"file"}
@@ -178,6 +192,7 @@ const Orders = () => {
                 style={{ display: "none" }}
               />
               <span style={{ marginTop: `${5}px` }}>Import</span>
+              <span className="tooltip">*.csv*</span>
               <img
                 alt="export-icon"
                 style={{ width: `${35}px`, marginLeft: `${1}rem` }}
@@ -297,7 +312,7 @@ const Orders = () => {
 
         {orders.length !== 0 ? (
           <div className="dashboard-content-footer">
-            {pagination.map((item: any, index: any) => (
+            {pagination.map((item: number, index: number) => (
               <span
                 key={index}
                 className={item === page ? "active-pagination" : "pagination"}
@@ -317,4 +332,4 @@ const Orders = () => {
   );
 };
 
-export default Orders;
+export default Employees;

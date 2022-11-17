@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import closeIcon from "../../assets/icons/close.svg";
-import all_orders from "../../constants/orders";
 import modalContext from "../../context/modalContext";
 import "./styles.css";
 const EditModal = ({ data, EditChange }: any) => {
@@ -13,7 +12,7 @@ const EditModal = ({ data, EditChange }: any) => {
     date: data.data.date,
     status: data.data.status,
   });
-  const updateData = (e: any) => {
+  const updateData = (e: React.ChangeEvent<HTMLInputElement>|any) => {
     setEdit({
       ...edit,
       [e.target.name]: e.target.value,
