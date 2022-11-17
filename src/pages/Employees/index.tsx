@@ -306,15 +306,17 @@ const Employees = () => {
                     <span>${Number(order.salary).toLocaleString()}</span>
                   </td>
                   <td>
-                    <div style={{ display: "flex" }}>
+                    <div className="action-div">
                       <img
                         alt="edit-icon"
                         src={EditIcon}
+                        style={{pointerEvents:showModal.addModal || showModal.editModal?"none":"auto"}}
                         onClick={() => handleEdit(order, index)}
                       />
                       <img
                         alt="delete-icon"
                         src={DeleteIcon}
+                        style={{pointerEvents:showModal.addModal || showModal.editModal?"none":"auto"}}
                         onClick={() => handleDelete(order.name)}
                       />
                     </div>

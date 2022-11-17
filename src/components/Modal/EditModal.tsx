@@ -51,16 +51,7 @@ const EditModal = ({ data, EditChange }: IEditModalProperties) => {
           e.preventDefault();
           EditChange(edit, data.index);
         }}
-        style={{
-          position: "absolute",
-          overflow: "scroll",
-          zIndex: 99,
-          width: `${40}%`,
-          height: `${70}vh`,
-          padding: `${2}rem`,
-          left: `${30}%`,
-          background: "#015C92",
-        }}
+        className="form"
       >
         <img
           src={closeIcon}

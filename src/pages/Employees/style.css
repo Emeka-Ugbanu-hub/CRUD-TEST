@@ -192,3 +192,8 @@ td span {
   border-right: 20px solid #000;
   border-bottom: 10px solid transparent;
 }
+.action-div {
+ display: flex;
+ cursor: pointer;
+
+}
