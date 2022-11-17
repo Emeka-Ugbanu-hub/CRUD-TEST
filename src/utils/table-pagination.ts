@@ -1,3 +1,17 @@
+/**
+* {calculateRange,sliceData}.ts*
+
+* Copyright © 2022 - All Rights Reserved. *
+
+* Unauthorized copying of this file, via any medium is strictly prohibited.
+* This file and all it's contents are proprietary and confidential. *
+
+* Maintained by Emeka Ugbanu, 2022
+* @file {calculateRange,sliceData}.ts
+* @author Emeka Ugbanu
+* @section License
+*/
+
 const calculateRange = (data: any, rowsPerPage: any) => {
   const range = [];
   const num = Math.ceil(data.length / rowsPerPage);

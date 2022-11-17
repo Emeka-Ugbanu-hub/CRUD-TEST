@@ -1,6 +1,4 @@
-import React, { useState, useContext } from "react";
-
-import "./App.css";
+import React, { useState, } from "react";
 import Employees from "./pages/Employees";
 import ModalContext from "./context/modalContext";
 

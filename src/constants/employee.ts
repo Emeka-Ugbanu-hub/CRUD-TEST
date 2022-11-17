@@ -1,4 +1,18 @@
-const all_employee = [
+/**
+* all_employee.ts*
+
+* Copyright © 2022 - All Rights Reserved. *
+
+* Unauthorized copying of this file, via any medium is strictly prohibited.
+* This file and all it's contents are proprietary and confidential. *
+
+* Maintained by Emeka Ugbanu, 2022
+* @file all_employee.ts
+* @author Emeka Ugbanu
+* @section License
+*/
+
+export const all_employee = [
   {
     date: "2022-11-15",
     name: "Michael Thompson",
@@ -24,5 +38,3 @@ const all_employee = [
     title: "Marketer",
   },
 ];
-
-export default all_employee;
